@@ -44,6 +44,16 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'which is the largest continent on Earth?',
+      o: ['Africa','Europe','Antarcatica','Asia'],
+      a: 3,
+    },
+    {
+      q: 'Which is the biggest desert on Earth?',
+      o: ['Thar','Sahara','Atacama','Petagonia'],
+      a: 1,
+    },
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -64,7 +74,7 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   // Calculate the score
-  const calculateScore = () => {
+    const calculateScore = () => {
     let score = 0;
     quizArray.map((quizItem, index) => {
       for (let i = 0; i < 4; i++) {
@@ -73,18 +83,51 @@ window.addEventListener('DOMContentLoaded', () => {
         let r = `radio_${index}_${i}`;
         liElement = document.querySelector('#' + li);
         radioElement = document.querySelector('#' + r);
-
+        //console.log(radioElement.value);
         if (quizItem.a == i) {
           //change background color of li element here
+          liElement.style.backgroundColor = "lightgreen";
         }
 
-        if (radioElement.checked) {
-          // code for task 1 goes here
-        }
+        if (radioElement.checked && quizItem.a === i) 
+        {
+          score++;
       }
+    }
+    //console.log(score);
+   
     });
+    return score;
   };
+    function displayScore() {
+     let result = calculateScore();
+     console.log(result);
+      document.querySelector('#Spanscore').innerHTML = `Your score is ${result}/5`;
 
+  }
+  const btnSubmit = document.querySelector('#btnSubmit');
+  const scoreValue = btnSubmit.addEventListener('click',displayScore);
+ 
+  function pageReset() 
+  {
+     window.location.assign('http://127.0.0.1:5500/jwd-js-assessment/index.html');
+  }
+  const btnReset = document.querySelector('#btnReset');
+  btnReset.addEventListener('click',pageReset);
   // call the displayQuiz function
   displayQuiz();
+  
+  //Set timer function
+  const timeValue = document.querySelector('#time');
+   setInterval(setTimerFunction,60000);
+    function setTimerFunction() 
+  {
+    alert("Sorry Timeout!!!");
+    displayQuiz();
+    displayScore();
+  }
+
+      calculateScore();
+      displayQuiz();
+   
 });
